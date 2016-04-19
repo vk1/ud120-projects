@@ -15,6 +15,16 @@ def outlierCleaner(predictions, ages, net_worths):
 
     ### your code goes here
 
+    errors = abs(net_worths - predictions) # Calculate errors
+
+    cleaned_length = int(len(ages) * 0.9) # Removing 10% of data with largest error
+
+    smallest_error_indices = errors.flatten().argsort()[:cleaned_length] # Get indices of smallest error
+
+    cleaned_data = zip(ages.flatten()[smallest_error_indices],
+                       net_worths.flatten()[smallest_error_indices],
+                       errors.flatten()[smallest_error_indices])
+
     
     return cleaned_data
 
