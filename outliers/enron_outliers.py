@@ -24,12 +24,16 @@ data_cleaned = np.delete(data, idx_max_bonus, axis=0)
 data_max_bonus = [(k,v['bonus']) for k,v in data_dict.iteritems() if v['bonus']==data[idx_max_bonus][1]]
 print 'Label for outlier (max bonus): {0}'.format(data_max_bonus[0][0])
 
-
 # View cleaned data
-data = data_cleaned
+# data = data_cleaned
+
+
+# Alternatively, remove outlier entry from data_dict, then plot
+data_dict.pop(data_max_bonus[0][0])
+data = featureFormat(data_dict, features)
+
 
 # Plot
-
 for point in data:
     salary = point[0]
     bonus = point[1]
