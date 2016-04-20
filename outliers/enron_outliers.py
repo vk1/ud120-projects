@@ -32,6 +32,15 @@ print 'Label for outlier (max bonus): {0}'.format(data_max_bonus[0][0])
 data_dict.pop(data_max_bonus[0][0])
 data = featureFormat(data_dict, features)
 
+# Get people with excessive bonuses and salaries
+min_bonus = 5000000
+min_salary = 1000000
+outliers_remaining = [(k,v['salary'],v['bonus']) for k,v in data_dict.iteritems() if \
+						v['bonus']>=min_bonus and v['bonus']!='NaN' and \
+						v['salary']>min_salary and v['salary']!='NaN']
+
+print 'Outliers:\n{0}'.format('\n'.join(p[0] for p in outliers_remaining))
+
 
 # Plot
 for point in data:
