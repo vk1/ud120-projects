@@ -22,7 +22,7 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
 
     ### plot each cluster with a different color--add more colors for
     ### drawing more than five clusters
-    colors = ["b", "c", "k", "m", "g"]
+    colors = ["b", "c", "k", "m", "g"]#, 'r', 'y']
     for ii, pp in enumerate(pred):
         plt.scatter(features[ii][0], features[ii][1], color = colors[pred[ii]])
 
@@ -64,8 +64,12 @@ plt.show()
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
+from sklearn.cluster import KMeans
 
-
+kmeans = KMeans(n_clusters=5)
+# kmeans.fit(finance_features)
+# pred = kmeans.predict(finance_features)
+pred = kmeans.fit_predict(finance_features)
 
 
 ### rename the "name" parameter when you change the number of features
