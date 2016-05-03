@@ -48,17 +48,30 @@ data_dict.pop("TOTAL", 0)
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
+feature_3 = "total_payments"
 poi  = "poi"
-features_list = [poi, feature_1, feature_2]
+features_list = [poi, feature_1, feature_2, feature_3]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
+
+
+## Feature scaling
+from sklearn.preprocessing import MinMaxScaler
+
+min_max_scaler = MinMaxScaler()
+finance_features_scaled = min_max_scaler.fit_transform(finance_features)
+
+# Test on parameters: 'salary'=200000 and 'exercised_options'=1000000
+finance_features_test = numpy.array([[200000., 1.0e6, 0.0]]) # Use float and not integer
+rescaled_features = min_max_scaler.transform(finance_features_test)
+print 'Rescaled salary: {0}\nRescaled exercised_options: {1}'.format(rescaled_features[0][0], rescaled_features[0][1])
 
 
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to 
 ### for f1, f2, _ in finance_features:
 ### (as it's currently written, the line below assumes 2 features)
-for f1, f2 in finance_features:
+for f1, f2, _ in finance_features:
     plt.scatter( f1, f2 )
 plt.show()
 
@@ -66,7 +79,7 @@ plt.show()
 ### for the data and store them to a list called pred
 from sklearn.cluster import KMeans
 
-kmeans = KMeans(n_clusters=5)
+kmeans = KMeans(n_clusters=2)
 # kmeans.fit(finance_features)
 # pred = kmeans.predict(finance_features)
 pred = kmeans.fit_predict(finance_features)
