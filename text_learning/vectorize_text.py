@@ -41,34 +41,35 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
-        # temp_counter += 1
-        if temp_counter < 200:
-            path = os.path.join('..', path[:-1])
-            print path
-            email = open(path, "r")
+        temp_counter += 1
+        # if temp_counter < 200:
+        path = os.path.join('..', path[:-1])
+        if temp_counter%1000==0:
+            print '{0}. {1} ({2})'.format(temp_counter, path, name)
+        email = open(path, "r")
 
-            ### use parseOutText to extract the text from the opened email
-            email_text = parseOutText(email)
+        ### use parseOutText to extract the text from the opened email
+        email_text = parseOutText(email)
 
-            ### use str.replace() to remove any instances of the words
-            ### ["sara", "shackleton", "chris", "germani"]
-            for word_to_replace in ["sara", "shackleton", "chris", "germani"]:
-                email_text = email_text.replace(word_to_replace , '')
+        ### use str.replace() to remove any instances of the words
+        ### ["sara", "shackleton", "chris", "germani"]
+        for word_to_replace in ["sara", "shackleton", "chris", "germani", "sshacklensf"]:
+            email_text = email_text.replace(word_to_replace , '')
 
-            ### append the text to word_data
-            word_data.append(email_text)
+        ### append the text to word_data
+        word_data.append(email_text)
 
-            ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-            from_data.append(0 if from_person == 'Sara' else 1)
+        ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
+        # from_data.append(0 if name == 'sara' else 1)
 
-            email.close()
+        email.close()
 
-print "emails processed"
+print "emails processed"# ({0})".format(temp_counter)
 from_sara.close()
 from_chris.close()
 
 pickle.dump( word_data, open("your_word_data.pkl", "w") )
-pickle.dump( from_data, open("your_email_authors.pkl", "w") )
+# pickle.dump( from_data, open("your_email_authors.pkl", "w") )
 
 
 
@@ -86,4 +87,4 @@ print 'No. of unique words in TfIdf: {0}'.format(len(vectorizer.get_feature_name
 
 ##
 # Word no. 34597:
-print 'Word no. 34597 is: {0}'.format(vectorizer.get_feature_names()[34597])
+# print 'Word no. 34597 is: {0}'.format(vectorizer.get_feature_names()[34597])
