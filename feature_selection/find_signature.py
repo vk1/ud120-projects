@@ -73,6 +73,9 @@ print 'Max importance: {0}. Index: {1}'.format(max_importance, index_max_importa
 # outliers = sorted(importance_array)[-10:]
 # index_of_outliers = importance_array.argsort()[-10:]
 
+# View outliers where min_importance used
+# outliers = sorted(importance_array[importance_array > min_importance])
+
 # View word at index 24321
 # vectorizer.get_feature_names()[24321]
 
