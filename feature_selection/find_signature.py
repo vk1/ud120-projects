@@ -38,6 +38,43 @@ labels_train   = labels_train[:150]
 
 
 ### your code goes here
+from sklearn import tree
+from sklearn.metrics import accuracy_score
+from time import time
+
+clf = tree.DecisionTreeClassifier()#min_samples_split=40)
+
+# Fit the data
+t0 = time()
+clf = clf.fit(features_train, labels_train)
+print 'Training time: {0} s'.format(round(time()-t0, 3))
+
+# Predict
+t1 = time()
+labels_pred = clf.predict(features_test)
+print 'Prediction time: {0} s'.format(round(time()-t1, 3))
+
+# Check accuracy
+accuracy = accuracy_score(labels_test, labels_pred)
+print 'Accuracy: {0}'.format(round(accuracy, 4))
+
+
+## Find features importance
+importance_array = clf.feature_importances_
+
+min_importance = 0.2
+
+max_importance = max(importance_array)
+index_max_importance = importance_array.argmax()
+
+print 'Max importance: {0}. Index: {1}'.format(max_importance, index_max_importance)
+
+# Arbitrarily viewing max 10 values
+# outliers = sorted(importance_array)[-10:]
+# index_of_outliers = importance_array.argsort()[-10:]
+
+# View word at index 24321
+# vectorizer.get_feature_names()[24321]
 
 
 
